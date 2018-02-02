@@ -1,7 +1,55 @@
 ﻿@model ProjectViewModel
 @{
-    ViewData["Title"] = "CreateProject";
+    ViewData["Title"] = "Create New Project";
 }
+<div align="center">
+    <h2>CreateProject</h2>
+    <form method="post">
+        <div class="container">
+            <label>Project Name: </label>
+            <br />
+            <input asp-for="Name" type="text" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+            <br />
 
-<h2>CreateProject</h2>
+            <label>Budget:</label>
+            <br />
+            <input asp-for="Budget" />
+            <span asp-validation-for="Budget" class="text-danger"></span>
+            <br />
+            <label>End date:</label>
+            <br />
+            <div>
+                <div class="input-group date" data-provide="datepicker">
+                    <input type="text" id="datepicker" class="form-control" />
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </div>
+                </div>
+            </div>
+            <span asp-validation-for="EndDate" class="text-danger"></span>
 
+            <br />
+            <label>Price per hour:</label>
+            <br />
+            <input asp-for="PricePerHour" />
+            <span asp-validation-for="PricePerHour" class="text-danger"></span>
+            <br />
+            <label>Estimated Time:</label>
+            <br />
+            <input asp-for="EstimatedTime" />
+            <span asp-validation-for="EstimatedTime" class="text-danger"></span>
+            <br />
+        </div>
+        <br />
+        <input type="submit" class="btn btn-success" value="Create Project" />
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $('#datepicker').datetimepicker({
+            format: 'YYYY.MM.DD'
+        });
+    });
+</script>

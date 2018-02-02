@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Economic.Data.Repositories
 {
-    public interface IProjectRepository : IRepository<ProjectEntity>
+    public interface IProjectRepository : IRepository<Project>
     {
-        
+        Task<IEnumerable<Project>> GetProjectsByUserIdAsync(long userId);
     }
 }

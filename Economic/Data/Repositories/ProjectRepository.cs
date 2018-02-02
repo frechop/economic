@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Economic.Data.Repositories
 {
-    public class ProjectRepository : Repository<ProjectEntity>, IProjectRepository
+    public class ProjectRepository : Repository<Project>, IProjectRepository
     {
      
         public EconomicContext _ctx { get; set; }
@@ -16,7 +16,7 @@ namespace Economic.Data.Repositories
         {
         }
         
-        public IEnumerable<ProjectEntity> GetProjectsByUserId(long userId)
+        public async Task<IEnumerable<Project>> GetProjectsByUserIdAsync(long userId)
         {
             return _ctx.Projects.Where(p => p.UserId == userId).ToList();
         }
