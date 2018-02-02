@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Economic.Data.Repositories
 {
-    public interface IProjectRepository : IRepository<Project>
+    public interface IProjectRepository : IRepository<ProjectEntity>
     {
         
     }

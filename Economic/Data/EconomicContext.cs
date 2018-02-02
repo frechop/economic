@@ -15,6 +15,6 @@ namespace Economic.Data
 
         }
 
-        public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectEntity> Projects { get; set; }
     }
 }

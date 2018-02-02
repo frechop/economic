@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Economic.Data.Entities
 {
-    public class Freelancer
+    public class FreelancerEntity
     {
         public long Id { get; set; }
 
-        public ICollection<Project> Projects { get; set; }
+        public ICollection<ProjectEntity> Projects { get; set; }
     }
 }

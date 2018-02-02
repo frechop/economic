@@ -2,11 +2,11 @@
 
 namespace Economic.Data.Entities
 {
-    public class Project
+    public class ProjectEntity
     {
         public long Id { get; set; }
 
-        public long FreelancerId { get; set; }
+        public long UserId { get; set; }
 
         public decimal Budget { get; set; }
 
@@ -19,5 +19,7 @@ namespace Economic.Data.Entities
         public int HoursSpent { get; set; }
 
         public int EstimatedTime { get; set; }
+
+        public string ClientName { get; set; }
     }
 }
