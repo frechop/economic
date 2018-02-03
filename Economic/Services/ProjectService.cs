@@ -17,7 +17,7 @@ namespace Economic.Services
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<IEnumerable<Project>> GetAllProjectsByUserIdAsync(long userId)
+        public async Task<IEnumerable<Project>> GetAllProjectsByUserIdAsync(string userId)
         {
             return await repository.GetProjectsByUserIdAsync(userId);
         }

@@ -2,49 +2,55 @@
 @{
     ViewData["Title"] = "Create New Project";
 }
-<div align="center">
-    <h2>CreateProject</h2>
-    <form method="post">
-        <div class="container">
-            <label>Project Name: </label>
-            <br />
-            <input asp-for="Name" type="text" />
-            <span asp-validation-for="Name" class="text-danger"></span>
-            <br />
 
-            <label>Budget:</label>
-            <br />
-            <input asp-for="Budget" />
-            <span asp-validation-for="Budget" class="text-danger"></span>
-            <br />
-            <label>End date:</label>
-            <br />
-            <div>
-                <div class="input-group date" data-provide="datepicker">
-                    <input type="text" id="datepicker" class="form-control" />
-                    <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </div>
+<form method="post">
+    <div class="form-group">
+        <label>Project Name:</label>
+        <input class="form-control" asp-for="Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label>Budget:</label>
+        <input asp-for="Budget" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label>End date:</label>
+        <br />
+        <div>
+            <div class="input-group date" data-provide="datepicker">
+                <input type="text" id="datepicker" class="form-control" />
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
                 </div>
             </div>
-            <span asp-validation-for="EndDate" class="text-danger"></span>
-
-            <br />
-            <label>Price per hour:</label>
-            <br />
-            <input asp-for="PricePerHour" />
-            <span asp-validation-for="PricePerHour" class="text-danger"></span>
-            <br />
-            <label>Estimated Time:</label>
-            <br />
-            <input asp-for="EstimatedTime" />
-            <span asp-validation-for="EstimatedTime" class="text-danger"></span>
-            <br />
         </div>
-        <br />
-        <input type="submit" class="btn btn-success" value="Create Project" />
-    </form>
-</div>
+        <span asp-validation-for="EndDate" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label>Price per hour:</label>
+        <input asp-for="PricePerHour" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label>Estimated Time:</label>
+        <input asp-for="EstimatedTime" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label>Client name:</label>
+        <input asp-for="ClientName" class="form-control">
+    </div>
+    <div class="form-group">
+        <label >Example textarea</label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+    </div>
+   
+    <button type="submit" class="btn btn-primary">Create Project</button>
+</form>
 <script>
     $(document).ready(function () {
 

@@ -1,0 +1,24 @@
+﻿@model IEnumerable<ProjectViewModel>
+@{
+    ViewData["Title"] = "ProjectsDashboard";
+}
+<h2>ProjectsDashboard</h2>
+<div>
+    @foreach (ProjectViewModel project in Model)
+    {
+        <div class="container col-lg-3 well">
+            <h1>@project.Name</h1>
+            <br />
+            <label>Deadline</label>
+            <p>@project.EndDate</p>
+            <h3>(@project.EstimatedTime - @project.HoursSpent)</h3>
+        </div>
+        <div class="col-lg-1"></div>
+    }
+
+    <div align="center" class="container col-lg-3 well">
+        <h1>Add project</h1>
+       <div align="center"> <i class="fa fa-5x fa-plus" style="color:green"></i></div>
+        <br />
+    </div>
+</div>

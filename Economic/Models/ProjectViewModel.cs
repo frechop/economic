@@ -9,8 +9,12 @@ namespace Economic.Models
 {
     public class ProjectViewModel
     {
+        public long Id { get; set; }
+
         [Required]
         public string Name { get; set; }
+
+        public string UserGUID { get; set; }
 
         [Required]
         public decimal Budget { get; set; }
@@ -25,5 +29,9 @@ namespace Economic.Models
 
         [Required]
         public int EstimatedTime { get; set; }
+
+        public string ClientName { get; set; }
+
+        public string Description { get; set; }
     }
 }

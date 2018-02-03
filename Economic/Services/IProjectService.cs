@@ -11,6 +11,6 @@ namespace Economic.Services
     {
         Task AddProjectAsync(Project project);
 
-        Task<IEnumerable<Project>> GetAllProjectsByUserIdAsync(long userId);
+        Task<IEnumerable<Project>> GetAllProjectsByUserIdAsync(string userId);
     }
 }

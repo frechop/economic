@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Economic.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using System;
 
 namespace Economic.Controllers
 {
@@ -25,7 +27,7 @@ namespace Economic.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateProject()
+        public async Task<IActionResult> CreateProject()
         {
             return View();
         }
@@ -37,10 +39,23 @@ namespace Economic.Controllers
             if (ModelState.IsValid)
             {
                 Project project = _mapper.Map<Project>(projectViewModel);
-                project.FreelancerId = (await _userManager.GetUserAsync(User)).FreelancerId;
+                project.UserGUID = (await _userManager.GetUserAsync(User)).Id;
+                project.StartDate = DateTime.Now;
                 await _projectService.AddProjectAsync(project);
             }
             return View();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult>  ProjectsDashboard()
+        {
+            var FreelancerId = (await _userManager.GetUserAsync(User)).Id;
+
+            var allProjects = await _projectService.GetAllProjectsByUserIdAsync(FreelancerId);
+            var projectsViewModels = _mapper.Map<IEnumerable<ProjectViewModel>>(allProjects);
+            
+            return View(projectsViewModels);
         }
 
         public IActionResult Index()

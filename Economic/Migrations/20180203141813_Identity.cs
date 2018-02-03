@@ -31,8 +31,6 @@ namespace Economic.Migrations
                     ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    FreelancerId = table.Column<long>(type: "INTEGER", nullable: false),
-                    FullName = table.Column<string>(type: "TEXT", nullable: true),
                     LockoutEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
                     NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -57,13 +55,14 @@ namespace Economic.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Budget = table.Column<decimal>(type: "TEXT", nullable: false),
                     ClientName = table.Column<string>(type: "TEXT", nullable: true),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
                     EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     EstimatedTime = table.Column<int>(type: "INTEGER", nullable: false),
-                    FreelancerId = table.Column<long>(type: "INTEGER", nullable: false),
                     HoursSpent = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     PricePerHour = table.Column<decimal>(type: "TEXT", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UserGUID = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

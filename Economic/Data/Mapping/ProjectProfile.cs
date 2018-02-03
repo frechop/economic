@@ -13,7 +13,9 @@ namespace Economic.Data.Mapping
     {
         public ProjectProfile()
         {
-            CreateMap<Project, ProjectViewModel>().ReverseMap();
+            CreateMap<Project, ProjectViewModel>();
+
+            CreateMap<ProjectViewModel, Project>().ForMember(dest => dest.UserGUID, opt => opt.Ignore());
 
         }
     }

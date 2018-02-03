@@ -9,6 +9,6 @@ namespace Economic.Data.Repositories
 {
     public interface IProjectRepository : IRepository<Project>
     {
-        Task<IEnumerable<Project>> GetProjectsByUserIdAsync(long userId);
+        Task<IEnumerable<Project>> GetProjectsByUserIdAsync(string userId);
     }
 }

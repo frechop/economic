@@ -36,7 +36,9 @@ namespace Economic
             services.AddSingleton(AutoMapperFactory.CreateAndConfigure());
             services.AddDbContext<EconomicContext>(options => options.UseSqlite("Data Source = Economic.db", x => x.SuppressForeignKeyEnforcement()));
             services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<ITimeReportRepository, TimeReportRepository>();
             services.AddTransient<IProjectService, ProjectService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

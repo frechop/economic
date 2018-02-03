@@ -8,7 +8,7 @@ namespace Economic.Data.Entities
 
         public string Name { get; set; }
   
-        public long FreelancerId { get; set; }
+        public String UserGUID { get; set; }
 
         public decimal Budget { get; set; }
 
@@ -23,5 +23,7 @@ namespace Economic.Data.Entities
         public int EstimatedTime { get; set; }
 
         public string ClientName { get; set; }
+
+        public string Description { get; set; }
     }
 }

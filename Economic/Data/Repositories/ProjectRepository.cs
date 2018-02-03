@@ -14,11 +14,12 @@ namespace Economic.Data.Repositories
 
         public ProjectRepository(EconomicContext economicContext) : base(economicContext)
         {
+            _ctx = economicContext;
         }
         
-        public async Task<IEnumerable<Project>> GetProjectsByUserIdAsync(long userId)
+        public async Task<IEnumerable<Project>> GetProjectsByUserIdAsync(string userId)
         {
-            return _ctx.Projects.Where(p => p.FreelancerId == userId).ToList();
+            return _ctx.Projects.Where(p => p.UserGUID == userId).ToList();
         }
     }
 }

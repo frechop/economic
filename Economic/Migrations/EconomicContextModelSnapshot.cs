@@ -28,11 +28,11 @@ namespace Economic.Migrations
 
                     b.Property<string>("ClientName");
 
+                    b.Property<string>("Description");
+
                     b.Property<DateTime>("EndDate");
 
                     b.Property<int>("EstimatedTime");
-
-                    b.Property<long>("FreelancerId");
 
                     b.Property<int>("HoursSpent");
 
@@ -41,6 +41,8 @@ namespace Economic.Migrations
                     b.Property<decimal>("PricePerHour");
 
                     b.Property<DateTime>("StartDate");
+
+                    b.Property<string>("UserGUID");
 
                     b.HasKey("Id");
 
@@ -61,10 +63,6 @@ namespace Economic.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
-
-                    b.Property<long>("FreelancerId");
-
-                    b.Property<string>("FullName");
 
                     b.Property<bool>("LockoutEnabled");
 
