@@ -18,7 +18,7 @@ namespace Economic.Data.Repositories
         
         public async Task<IEnumerable<Project>> GetProjectsByUserIdAsync(long userId)
         {
-            return _ctx.Projects.Where(p => p.UserId == userId).ToList();
+            return _ctx.Projects.Where(p => p.FreelancerId == userId).ToList();
         }
     }
 }

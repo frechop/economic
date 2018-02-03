@@ -7,8 +7,8 @@ namespace Economic.Data.Entities
         public long Id { get; set; }
 
         public string Name { get; set; }
-
-        public long UserId { get; set; }
+  
+        public long FreelancerId { get; set; }
 
         public decimal Budget { get; set; }
 

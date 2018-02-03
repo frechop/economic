@@ -17,16 +17,10 @@ namespace Economic.Data
         }
 
         public DbSet<Project> Projects { get; set; }
-        public DbSet<Freelancer> Freelancers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<User>()
-           .HasOne(p => p.Blog)
-           .WithMany(b => b.Posts)
-           .OnDelete(DeleteBehavior.Cascade);
             base.OnModelCreating(builder);
-
         }
     }
 }

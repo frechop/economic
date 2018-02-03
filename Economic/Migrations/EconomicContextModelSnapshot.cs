@@ -19,16 +19,6 @@ namespace Economic.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
 
-            modelBuilder.Entity("Economic.Data.Entities.Freelancer", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Freelancers");
-                });
-
             modelBuilder.Entity("Economic.Data.Entities.Project", b =>
                 {
                     b.Property<long>("Id")
@@ -42,7 +32,7 @@ namespace Economic.Migrations
 
                     b.Property<int>("EstimatedTime");
 
-                    b.Property<long?>("FreelancerId");
+                    b.Property<long>("FreelancerId");
 
                     b.Property<int>("HoursSpent");
 
@@ -52,11 +42,7 @@ namespace Economic.Migrations
 
                     b.Property<DateTime>("StartDate");
 
-                    b.Property<long>("UserId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("FreelancerId");
 
                     b.ToTable("Projects");
                 });
@@ -104,9 +90,6 @@ namespace Economic.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FreelancerId")
-                        .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -223,21 +206,6 @@ namespace Economic.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("Economic.Data.Entities.Project", b =>
-                {
-                    b.HasOne("Economic.Data.Entities.Freelancer")
-                        .WithMany("Projects")
-                        .HasForeignKey("FreelancerId");
-                });
-
-            modelBuilder.Entity("Economic.Data.Entities.User", b =>
-                {
-                    b.HasOne("Economic.Data.Entities.Freelancer")
-                        .WithOne("User")
-                        .HasForeignKey("Economic.Data.Entities.User", "FreelancerId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
