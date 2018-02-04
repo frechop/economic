@@ -14,6 +14,8 @@ namespace Economic.Data.Mapping
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<ProjectProfile>();
+                cfg.AddProfile<TimeReportProfile>();
+                cfg.AddProfile<TaskEntityProfile>();
             });
 
             config.AssertConfigurationIsValid();

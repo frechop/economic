@@ -18,7 +18,7 @@ namespace Economic.Data.Repositories
 
         public async Task<IEnumerable<TimeReport>> GetReportsByProjectIdAsync(long projectId)
         {
-            return _ctx.TimeReports.Where(t => t.ProjectId == projectId);
+            return _ctx.TimeReports.Where(t => t.ProjectId == projectId).ToList();
         }
     }
 }

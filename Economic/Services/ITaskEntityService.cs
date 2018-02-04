@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Economic.Services
 {
-    public class TimeReport
+    public interface ITaskEntityService
     {
         
     }

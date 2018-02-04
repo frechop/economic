@@ -20,6 +20,8 @@ namespace Economic.Data
 
         public DbSet<TimeReport> TimeReports { get; set; }
 
+        public DbSet<TaskEntity> Tasks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

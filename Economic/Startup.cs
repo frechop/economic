@@ -37,8 +37,10 @@ namespace Economic
             services.AddDbContext<EconomicContext>(options => options.UseSqlite("Data Source = Economic.db", x => x.SuppressForeignKeyEnforcement()));
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<ITimeReportRepository, TimeReportRepository>();
+            services.AddScoped<ITaskEntityRepository, TaskEntityRepository>();
             services.AddTransient<IProjectService, ProjectService>();
-
+            services.AddTransient<ITaskEntityService, TaskEntityService>();
+            services.AddTransient<ITimeReportService, TimeReportService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

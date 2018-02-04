@@ -48,7 +48,7 @@ namespace Economic.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult>  ProjectsDashboard()
+        public async Task<IActionResult> ProjectsDashboard()
         {
             var FreelancerId = (await _userManager.GetUserAsync(User)).Id;
 

@@ -11,9 +11,10 @@ using System;
 namespace Economic.Migrations
 {
     [DbContext(typeof(EconomicContext))]
-    partial class EconomicContextModelSnapshot : ModelSnapshot
+    [Migration("20180203220453_timereports")]
+    partial class timereports
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
