@@ -32,7 +32,7 @@ namespace Economic.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> TimeReports()
+        public async Task<IActionResult> TimeReports(long selectedProjectId)
         {
             var FreelancerId = (await _userManager.GetUserAsync(User)).Id;
             var allProjects = await _projectService.GetAllProjectsByUserIdAsync(FreelancerId);
@@ -50,6 +50,7 @@ namespace Economic.Controllers
             }
 
             overViewModel.ProjectNamesWithIds = projectNamesWithIds;
+            overViewModel.SelectedProject = selectedProjectId;
             return View(overViewModel);
 
         }
@@ -112,7 +113,7 @@ namespace Economic.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Edit(long TimeReportId)
+        public async Task<IActionResult> Edit(long timeReportId)
         {
             return View();
         }
@@ -124,5 +125,15 @@ namespace Economic.Controllers
             return View();
         }
 
+        [Authorize]
+        [HttpDelete]
+        public async Task<IActionResult> Delete(TimeReportViewModel model)
+        {
+
+            var TimeReport = _mapper.Map<TimeReport>(model);
+            await _timeReportService.DeleteTimeReportAsync(TimeReport);
+
+            return View("TimeReports");
+        }
     }
 }

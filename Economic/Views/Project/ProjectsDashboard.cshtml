@@ -6,19 +6,24 @@
 <div>
     @foreach (ProjectViewModel project in Model)
     {
-        <div class="container col-lg-3 well">
-            <h1>@project.Name</h1>
-            <br />
-            <label>Deadline</label>
-            <p>@project.EndDate</p>
-            <h3>(@project.EstimatedTime - @project.HoursSpent)</h3>
-        </div>
-        <div class="col-lg-1"></div>
+        <a asp-controller="TimeReport" asp-action="TimeReports" asp-route-id="@project.Id">
+            <div class="container col-lg-3 well" style="text-overflow:clip">
+                <h1>@project.Name</h1>
+                <br />
+                <label>Deadline</label>
+                <p>@project.EndDate</p>
+                <label>Remaining Time</label>
+                <h3>@(project.EstimatedTime - project.HoursSpent)</h3>
+            </div>
+            <div class="col-lg-1"></div>
+        </a>
     }
 
-    <div align="center" class="container col-lg-3 well">
-        <h1>Add project</h1>
-       <div align="center"> <i class="fa fa-5x fa-plus" style="color:green"></i></div>
-        <br />
-    </div>
+    <a asp-controller="Project" asp-action="CreateProject">
+        <div align="center" class="container col-lg-3 well">
+            <h1>Add project</h1>
+            <div align="center"> <i class="fa fa-5x fa-plus" style="color:green"></i></div>
+            <br />
+        </div>
+    </a>
 </div>
