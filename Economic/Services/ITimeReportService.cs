@@ -13,6 +13,10 @@ namespace Economic.Services
 
         Task AddTimeReportAsync(TimeReport timeReport);
 
-        Task DeleteTimeReportAsync(TimeReport timeReport);
+        Task DeleteTimeReportAsync(long timeReportId);
+
+        Task UpdateTimeReportAsync(TimeReport TimeReport);
+
+        Task<TimeReport> GetReportByIdAsync(long reportId);
     }
 }

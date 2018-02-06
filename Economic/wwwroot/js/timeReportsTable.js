@@ -34,7 +34,7 @@
 
             {
                 "render": function (data, type, full, meta)
-                { return '<a class="btn btn-info" href="/TimeReport/Edit/' + full.id + '">Edit</a>'; }
+                { return '<a class="btn btn-info" href="/TimeReport/Edit?timeReportId=' + full.id + '">Edit</a>'; }
             },
             {
                 data: null, render: function (data, type, row) {
@@ -59,10 +59,10 @@ function DeleteData(CustomerID) {
 }
 
 
-function Delete(CustomerID) {
-    var url = '@Url.Content("~/")' + "TimeReport/Delete";
+function Delete(reportId) {
+    var url = "/TimeReport/Delete?timeReportId=" + reportId;
 
-    $.post(url, { ID: CustomerID }, function (data) {
+    $.post(url, { ID: reportId }, function (data) {
         if (data) {
             oTable = $('#reportsTable').DataTable();
             oTable.draw();

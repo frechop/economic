@@ -8,7 +8,7 @@ namespace Economic.Data.Repositories
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        TEntity Get(long id);
+        Task<TEntity> GetAsync(long Id);
 
         IEnumerable<TEntity> GetAll();
 

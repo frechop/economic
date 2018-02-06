@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Economic.Data.Repositories
@@ -29,9 +28,9 @@ namespace Economic.Data.Repositories
         }
 
 
-        public TEntity Get(long id)
+        public async Task<TEntity> GetAsync(long id)
         {
-            return Context.Set<TEntity>().Find(id);
+            return await Context.Set<TEntity>().FindAsync(id);
         }
 
         public IEnumerable<TEntity> GetAll()
@@ -41,7 +40,14 @@ namespace Economic.Data.Repositories
 
         public void Delete(TEntity entity)
         {
-            Context.Set<TEntity>().Remove(entity);
+            try
+            {
+                Context.Set<TEntity>().Remove(entity);
+            }
+            catch( Exception ex)
+            {
+                var x = ex.Message;
+            }
         }
     }
 }

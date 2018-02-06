@@ -115,25 +115,32 @@ namespace Economic.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(long timeReportId)
         {
-            return View();
+            var timeReport = await _timeReportService.GetReportByIdAsync(timeReportId);
+            var model = _mapper.Map<TimeReportViewModel>(timeReport);
+            return View(model);
         }
 
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Edit(TimeReportViewModel model)
         {
+            if(ModelState.IsValid)
+            {
+                var timeReport = _mapper.Map<TimeReport>(model);
+                await _timeReportService.UpdateTimeReportAsync(timeReport);
+                return View("TimeReports");
+            }
+
             return View();
         }
 
         [Authorize]
-        [HttpDelete]
-        public async Task<IActionResult> Delete(TimeReportViewModel model)
+        [HttpPost]
+        public async Task<JsonResult>  Delete(long timeReportId)
         {
+                await _timeReportService.DeleteTimeReportAsync(timeReportId);
 
-            var TimeReport = _mapper.Map<TimeReport>(model);
-            await _timeReportService.DeleteTimeReportAsync(TimeReport);
-
-            return View("TimeReports");
+            return Json(data: "Deleted");
         }
     }
 }

@@ -41,9 +41,15 @@ namespace Economic.Services
             _timeReportRepository.Update(timeReport);
         }
 
-        public async Task DeleteTimeReportAsync(TimeReport timeReport)
+        public async Task DeleteTimeReportAsync(long timeReportId)
         {
-           _timeReportRepository.Delete(timeReport);
+            var report = await _timeReportRepository.GetAsync(timeReportId);
+            _timeReportRepository.Delete(report);
+        }
+
+        public async Task<TimeReport> GetReportByIdAsync(long reportId)
+        {
+            return await _timeReportRepository.GetAsync(reportId);
         }
     }
 }
