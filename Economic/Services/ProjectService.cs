@@ -24,5 +24,10 @@ namespace Economic.Services
         {
             await _repository.AddAsync(project);
         }
+
+        public async Task<Project> GetProjectByIdAsync(long projectId)
+        {
+           return await _repository.GetAsync(projectId);
+        }
     }
 }

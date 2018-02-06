@@ -18,13 +18,11 @@ namespace Economic.Data.Repositories
         public async Task AddAsync(TEntity entity)
         {
            await Context.Set<TEntity>().AddAsync(entity);
-           await Context.SaveChangesAsync();
         }
 
         public void Update(TEntity entity)
         {
             Context.Set<TEntity>().Update(entity);
-            Context.SaveChanges();
         }
 
 

@@ -21,9 +21,9 @@ namespace Economic.Controllers
         public ProjectController(
                     UserManager<User> userManager, IProjectService projectService, IMapper mapper)
         {
-            _userManager = userManager;
-            _projectService = projectService;
-            _mapper = mapper;
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _projectService = projectService ?? throw new ArgumentNullException(nameof(projectService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]

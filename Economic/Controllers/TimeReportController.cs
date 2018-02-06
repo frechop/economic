@@ -24,18 +24,18 @@ namespace Economic.Controllers
             ITimeReportService timeReportService,
             IMapper mapper)
         {
-            _userManager = userManager;
-            _projectService = projectService;
-            _timeReportService = timeReportService;
-            _mapper = mapper;
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _projectService = projectService ?? throw new ArgumentNullException(nameof(projectService));
+            _timeReportService = timeReportService ?? throw new ArgumentNullException(nameof(timeReportService));
+            _mapper = mapper ?? throw new ArgumentNullException((nameof(mapper)));
         }
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> TimeReports(long selectedProjectId)
+        public async Task<IActionResult> TimeReports(long selectedProjectId = 0)
         {
-            var freelancerId = (await _userManager.GetUserAsync(User)).Id;
-            var allProjects = await _projectService.GetAllProjectsByUserIdAsync(freelancerId);
+            var userId = (await _userManager.GetUserAsync(User)).Id;
+            var allProjects = await _projectService.GetAllProjectsByUserIdAsync(userId);
             var projectsViewModels = _mapper.Map<IEnumerable<ProjectViewModel>>(allProjects);
             var projectNamesWithIds = projectsViewModels.ToDictionary(x => x.Name, x => x.Id);
             var overViewModel = new TimeReportsOverviewViewModel();
@@ -122,7 +122,7 @@ namespace Economic.Controllers
             {
                 var timeReport = _mapper.Map<TimeReport>(model);
                 await _timeReportService.UpdateTimeReportAsync(timeReport);
-                return View("TimeReports");
+                return RedirectToAction("TimeReports", new {selectedProjectId = model.ProjectId });
             }
 
             return View();

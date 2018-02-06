@@ -13,13 +13,13 @@ namespace Economic.Services
     {
         private readonly EconomicContext _ctx;
         private readonly ITimeReportRepository _timeReportRepository;
-        private readonly IProjectRepository _projectRepository;
+        private readonly IProjectService _projectService;
 
-        public TimeReportService(EconomicContext context, ITimeReportRepository timeReportRepository, IProjectRepository projectRepository)
+        public TimeReportService(EconomicContext context, ITimeReportRepository timeReportRepository, IProjectService projectService)
         {
-            _ctx = context;
+            _ctx = context ?? throw new ArgumentNullException(nameof(context));
             _timeReportRepository = timeReportRepository ?? throw new ArgumentNullException(nameof(timeReportRepository));
-            _projectRepository = projectRepository ?? throw new ArgumentNullException(nameof(projectRepository));
+            _projectService = projectService ?? throw new ArgumentNullException(nameof(projectService));
         }
 
         public async Task<IEnumerable<TimeReport>> GetReportsByProjectIdAsync(long projectId)
@@ -32,13 +32,20 @@ namespace Economic.Services
             using (_ctx)
             {
                 await _timeReportRepository.AddAsync(timeReport);
+
             }
-            await _ctx.SaveChangesAsync();
         }
 
         public async Task UpdateTimeReportAsync(TimeReport timeReport)
         {
-            _timeReportRepository.Update(timeReport);
+            var oldReport = await _timeReportRepository.GetAsync(timeReport.Id);
+            var timeDifference = oldReport.HoursSpent - timeReport.HoursSpent;
+            oldReport.HoursSpent = timeReport.HoursSpent;
+            var project = await _projectService.GetProjectByIdAsync(timeReport.ProjectId);
+            project.HoursSpent += timeDifference;
+            _timeReportRepository.Update(oldReport);
+
+            await _ctx.SaveChangesAsync();
         }
 
         public async Task DeleteTimeReportAsync(long timeReportId)
