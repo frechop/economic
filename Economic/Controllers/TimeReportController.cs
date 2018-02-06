@@ -34,15 +34,17 @@ namespace Economic.Controllers
         [HttpGet]
         public async Task<IActionResult> TimeReports(long selectedProjectId)
         {
-            var FreelancerId = (await _userManager.GetUserAsync(User)).Id;
-            var allProjects = await _projectService.GetAllProjectsByUserIdAsync(FreelancerId);
+            var freelancerId = (await _userManager.GetUserAsync(User)).Id;
+            var allProjects = await _projectService.GetAllProjectsByUserIdAsync(freelancerId);
             var projectsViewModels = _mapper.Map<IEnumerable<ProjectViewModel>>(allProjects);
             var projectNamesWithIds = projectsViewModels.ToDictionary(x => x.Name, x => x.Id);
             var overViewModel = new TimeReportsOverviewViewModel();
+
             foreach (long projectId in projectNamesWithIds.Values)
             {
-                var reports = await _timeReportService.GetReportsByProjectIdAsync(projectId);
-                var reportViews = _mapper.Map<IEnumerable<TimeReportViewModel>>(reports);
+                var timeReports = await _timeReportService.GetReportsByProjectIdAsync(projectId);
+                var reportViews = _mapper.Map<IEnumerable<TimeReportViewModel>>(timeReports);
+
                 if (reportViews.Count() > 0)
                 {
                     overViewModel.ProjectToReportsDictionary.Add(projectId, reportViews);
@@ -52,7 +54,6 @@ namespace Economic.Controllers
             overViewModel.ProjectNamesWithIds = projectNamesWithIds;
             overViewModel.SelectedProject = selectedProjectId;
             return View(overViewModel);
-
         }
 
         [Authorize]
@@ -76,30 +77,23 @@ namespace Economic.Controllers
             try
             {
                 var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
-                // Skiping number of Rows count  
                 var start = Request.Form["start"].FirstOrDefault();
-                // Paging Length 10,20  
                 var length = Request.Form["length"].FirstOrDefault();
 
                 var searchValue = Request.Form["search[value]"].FirstOrDefault();
 
-                //Paging Size (10,20,50,100)  
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                // Getting all Customer data  
                 var timeReports = await _timeReportService.GetReportsByProjectIdAsync(projectId);
 
-                //Search  
                 if (!string.IsNullOrEmpty(searchValue))
                 {
                     timeReports = timeReports.Where(m => m.Description.Contains(searchValue));
                 }
 
-                //total number of rows count   
                 recordsTotal = timeReports.Count();
-                //Paging   
                 var data = timeReports.Skip(skip).Take(pageSize).ToList();
 
                 return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
@@ -124,7 +118,7 @@ namespace Economic.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(TimeReportViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var timeReport = _mapper.Map<TimeReport>(model);
                 await _timeReportService.UpdateTimeReportAsync(timeReport);
@@ -136,9 +130,9 @@ namespace Economic.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<JsonResult>  Delete(long timeReportId)
+        public async Task<JsonResult> Delete(long timeReportId)
         {
-                await _timeReportService.DeleteTimeReportAsync(timeReportId);
+            await _timeReportService.DeleteTimeReportAsync(timeReportId);
 
             return Json(data: "Deleted");
         }
