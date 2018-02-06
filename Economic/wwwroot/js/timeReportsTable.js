@@ -3,6 +3,7 @@
     $("#SelectedProject").change(function () {
         $("reportsTable").DataTable().destroy();
         InitTable();
+        InitTotal();
     })
 
     function InitTable(){
@@ -42,10 +43,12 @@
                 }
             },
         ]
-    });
+        });
     }
 
     InitTable();
+
+    $("#totalPrice").text($("#reportsTable").DataTable().column("4").data().sum());
 });
 
 

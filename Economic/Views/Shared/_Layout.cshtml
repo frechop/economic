@@ -30,13 +30,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Economic</a>
+                <a class="navbar-brand">Economic</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Project" asp-action="ProjectsDashboard">Projects</a></li>
                     <li><a asp-area="" asp-controller="TimeReport" asp-action="TimeReports"><i class="fa fa-clock-o"></i> Time Reports</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -44,8 +43,8 @@
     </nav>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
+        <hr style="position: absolute; bottom: 0"/>
+        <footer style="position: absolute; bottom: 0">
             <p>&copy; 2018 - Economic</p>
         </footer>
     </div>
@@ -77,6 +76,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
     <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.16/api/sum().js"></script>
     <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
     @RenderSection("Scripts", required: false)
 </body>

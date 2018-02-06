@@ -96,7 +96,7 @@ namespace Economic.Controllers
                 recordsTotal = timeReports.Count();
                 var data = timeReports.Skip(skip).Take(pageSize).ToList();
 
-                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data});
 
             }
             catch (Exception)
