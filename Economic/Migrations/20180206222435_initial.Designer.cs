@@ -11,8 +11,8 @@ using System;
 namespace Economic.Migrations
 {
     [DbContext(typeof(EconomicContext))]
-    [Migration("20180203141813_Identity")]
-    partial class Identity
+    [Migration("20180206222435_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,6 +48,42 @@ namespace Economic.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("Economic.Data.Entities.TaskEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("ProjectId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("Economic.Data.Entities.TimeReport", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("HoursSpent");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<long>("ProjectId");
+
+                    b.Property<bool>("Submitted");
+
+                    b.Property<long?>("TaskId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TimeReports");
                 });
 
             modelBuilder.Entity("Economic.Data.Entities.User", b =>

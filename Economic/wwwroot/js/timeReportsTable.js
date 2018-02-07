@@ -6,49 +6,52 @@
         InitTotal();
     })
 
-    function InitTable(){
-    $("#reportsTable").DataTable({
-        "processing": true,
-        "serverSide": true,
-        "filter": true,
-        "destroy": true,
-        "orderMulti": false,
-        "ajax": {
-            "url": "/TimeReport/LoadData",
-            "type": "POST",
-            "data": { projectId: $("#SelectedProject").val() },
-            "datatype": "json"
-        },
-        "columnDefs": [{
-            "defaultContent": "-",
-            "targets": "_all"
-        }],
-        "columns": [
-            { "data": "id", "name": "id", "autoWidth": true },
-            { "data": "taskId", "name": "taskId", "autoWidth": true },
-            { "data": "creationDate", "name": "creationDate", "autoWidth": true },
-            { "data": "hoursSpent", "name": "hoursSpent", "autoWidth": true },
-            { "data": "price", "name": "price", "autoWidth": true },
-            { "data": "submitted", "name": "submitted", "autoWidth": true },
-            { "data": "description", "name": "description", "autoWidth": true },
+    function InitTable() {
+        $("#reportsTable").DataTable({
+            "processing": true,
+            "serverSide": true,
+            "filter": true,
+            "destroy": true,
+            "initComplete": function (settings, json) {
+                $("#totalPrice").text($("#reportsTable").DataTable().column(4).data().sum());
+            },
+            "orderMulti": false,
+            "ajax": {
+                "url": "/TimeReport/LoadData",
+                "type": "POST",
+                "data": { projectId: $("#SelectedProject").val() },
+                "datatype": "json"
+            },
+            "columnDefs": [{
+                "defaultContent": "-",
+                "targets": "_all"
+            }],
+            "columns": [
+                { "data": "id", "name": "id", "autoWidth": true },
+                { "data": "taskId", "name": "taskId", "autoWidth": true },
+                { "data": "creationDate", "name": "creationDate", "autoWidth": true },
+                { "data": "hoursSpent", "name": "hoursSpent", "autoWidth": true },
+                { "data": "price", "name": "price", "autoWidth": true },
+                { "data": "submitted", "name": "submitted", "autoWidth": true },
+                { "data": "description", "name": "description", "autoWidth": true },
 
 
-            {
-                "render": function (data, type, full, meta)
-                { return '<a class="btn btn-info" href="/TimeReport/Edit?timeReportId=' + full.id + '">Edit</a>'; }
-            },
-            {
-                data: null, render: function (data, type, row) {
-                    return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.id + "'); >Delete</a>";
-                }
-            },
-        ]
+                {
+                    "render": function (data, type, full, meta)
+                    { return '<a class="btn btn-info" href="/TimeReport/Edit?timeReportId=' + full.id + '">Edit</a>'; }
+                },
+                {
+                    data: null, render: function (data, type, row) {
+                        return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.id + "'); >Delete</a>";
+                    }
+                },
+            ]
         });
     }
 
     InitTable();
 
-    $("#totalPrice").text($("#reportsTable").DataTable().column("4").data().sum());
+    $("#content").text($("html").html());
 });
 
 

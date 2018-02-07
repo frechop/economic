@@ -1,4 +1,5 @@
-﻿using Economic.Data.Entities;
+﻿using Economic.Data;
+using Economic.Data.Entities;
 using Economic.Data.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,12 @@ namespace Economic.Services
     public class ProjectService : IProjectService
     {
         private readonly IProjectRepository _repository;
+        private readonly EconomicContext _context;
 
-        public ProjectService(IProjectRepository repository)
+        public ProjectService(IProjectRepository repository, EconomicContext context)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public async Task<IEnumerable<Project>> GetAllProjectsByUserIdAsync(string userId)
@@ -23,6 +26,7 @@ namespace Economic.Services
         public async Task AddProjectAsync(Project project)
         {
             await _repository.AddAsync(project);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<Project> GetProjectByIdAsync(long projectId)

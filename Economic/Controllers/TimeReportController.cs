@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Economic.Data.Entities;
 using Economic.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.NodeServices;
+using System.Net.Http;
 
 namespace Economic.Controllers
 {
@@ -96,7 +98,7 @@ namespace Economic.Controllers
                 recordsTotal = timeReports.Count();
                 var data = timeReports.Skip(skip).Take(pageSize).ToList();
 
-                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data});
+                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
 
             }
             catch (Exception)
@@ -122,7 +124,7 @@ namespace Economic.Controllers
             {
                 var timeReport = _mapper.Map<TimeReport>(model);
                 await _timeReportService.UpdateTimeReportAsync(timeReport);
-                return RedirectToAction("TimeReports", new {selectedProjectId = model.ProjectId });
+                return RedirectToAction("TimeReports", new { selectedProjectId = model.ProjectId });
             }
 
             return View();
@@ -135,6 +137,25 @@ namespace Economic.Controllers
             await _timeReportService.DeleteTimeReportAsync(timeReportId);
 
             return Json(data: "Deleted");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> MyAction([FromServices] INodeServices nodeServices)
+        {
+
+            HttpClient client = new HttpClient();
+            var htmlContent = await client.GetStringAsync($"http://{Request.Host}/TimeReport/TimeReports/1");
+
+            var result = await nodeServices.InvokeAsync<byte[]>("./pdf", htmlContent);
+
+            HttpContext.Response.ContentType = "application/pdf";
+
+            string filename = @"report.pdf";
+            HttpContext.Response.Headers.Add("x-filename", filename);
+            HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "x-filename");
+            HttpContext.Response.Body.Write(result, 0, result.Length);
+            return new ContentResult();
         }
     }
 }

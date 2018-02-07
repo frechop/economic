@@ -13,6 +13,7 @@ using Economic.Data.Mapping;
 using Economic.Services;
 using Economic.Data.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Economic
 {
@@ -41,6 +42,8 @@ namespace Economic
             services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<ITaskEntityService, TaskEntityService>();
             services.AddTransient<ITimeReportService, TimeReportService>();
+            services.AddTransient<IdentityDbContext<User>, EconomicContext>();
+            services.AddNodeServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

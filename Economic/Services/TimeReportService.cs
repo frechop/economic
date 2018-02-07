@@ -32,7 +32,7 @@ namespace Economic.Services
             using (_ctx)
             {
                 await _timeReportRepository.AddAsync(timeReport);
-
+                await _ctx.SaveChangesAsync();
             }
         }
 
