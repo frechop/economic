@@ -144,8 +144,10 @@ namespace Economic.Controllers
         public async Task<IActionResult> MyAction([FromServices] INodeServices nodeServices)
         {
 
-            HttpClient client = new HttpClient();
-            var htmlContent = await client.GetStringAsync($"http://{Request.Host}/TimeReport/TimeReports/1");
+            //HttpClient client = new HttpClient();
+            //ar htmlContent = await client.GetStringAsync($"http://{Request.Host}/TimeReport/TimeReports/1");
+            var htmlContent = "Task ID Price 342443 <br /> Task ID Price 34343";
+            //var reportsForInvoice = _timeReportService.GetNotSubmittedReportsAsync();
 
             var result = await nodeServices.InvokeAsync<byte[]>("./pdf", htmlContent);
 

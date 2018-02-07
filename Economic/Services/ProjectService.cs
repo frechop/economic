@@ -1,6 +1,7 @@
 ﻿using Economic.Data;
 using Economic.Data.Entities;
 using Economic.Data.Repositories;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,9 +11,9 @@ namespace Economic.Services
     public class ProjectService : IProjectService
     {
         private readonly IProjectRepository _repository;
-        private readonly EconomicContext _context;
+        private readonly IdentityDbContext<User> _context;
 
-        public ProjectService(IProjectRepository repository, EconomicContext context)
+        public ProjectService(IProjectRepository repository, IdentityDbContext<User> context)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _context = context ?? throw new ArgumentNullException(nameof(context));

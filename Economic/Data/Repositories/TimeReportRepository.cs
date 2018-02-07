@@ -20,5 +20,15 @@ namespace Economic.Data.Repositories
         {
             return _ctx.TimeReports.Where(t => t.ProjectId == projectId).ToList();
         }
+
+        public async Task<IEnumerable<TimeReport>> GetNotSubmittedProjecAsync(long projectId)
+        {
+            return _ctx.TimeReports.Where(t => t.ProjectId == projectId && t.Submitted == false).ToList();
+        }
+
+        public async Task MarkReportsAsSubmitted(long projectId)
+        {
+            //_ctx.TimeReports.
+        }
     }
 }

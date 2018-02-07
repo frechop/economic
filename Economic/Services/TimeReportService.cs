@@ -27,6 +27,11 @@ namespace Economic.Services
             return await _timeReportRepository.GetReportsByProjectIdAsync(projectId);
         }
 
+        public async Task<IEnumerable<TimeReport>> GetNotSubmittedReportsAsync(long projectId)
+        {
+            return await _timeReportRepository.GetReportsByProjectIdAsync(projectId);
+        }
+
         public async Task AddTimeReportAsync(TimeReport timeReport)
         {
             using (_ctx)

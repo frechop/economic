@@ -11,6 +11,8 @@ namespace Economic.Services
     {
         Task<IEnumerable<TimeReport>> GetReportsByProjectIdAsync(long projectId);
 
+        Task<IEnumerable<TimeReport>> GetNotSubmittedReportsAsync(long projectId);
+
         Task AddTimeReportAsync(TimeReport timeReport);
 
         Task DeleteTimeReportAsync(long timeReportId);

@@ -32,8 +32,8 @@ namespace Economic
             services.AddMvc();
 
             services.AddIdentity<User, IdentityRole>().
-                AddEntityFrameworkStores<EconomicContext>().
-                AddDefaultTokenProviders();
+            AddEntityFrameworkStores<EconomicContext>().
+            AddDefaultTokenProviders();
             services.AddSingleton(AutoMapperFactory.CreateAndConfigure());
             services.AddDbContext<EconomicContext>(options => options.UseSqlite("Data Source = Economic.db", x => x.SuppressForeignKeyEnforcement()));
             services.AddScoped<IProjectRepository, ProjectRepository>();
