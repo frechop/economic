@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Economic.Data.Repositories;
 using Economic.Models;
 using Economic.Services;
 using AutoMapper;
@@ -26,10 +25,11 @@ namespace Economic.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> CreateProject()
         {
-            return View();
+           return View();
         }
 
         [Authorize]
@@ -42,6 +42,7 @@ namespace Economic.Controllers
                 project.UserGUID = (await _userManager.GetUserAsync(User)).Id;
                 project.StartDate = DateTime.Now;
                 await _projectService.AddProjectAsync(project);
+                return RedirectToAction("ProjectsDashboard");
             }
             return View();
         }

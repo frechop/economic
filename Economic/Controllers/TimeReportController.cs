@@ -10,7 +10,6 @@ using Economic.Data.Entities;
 using Economic.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.NodeServices;
-using System.Net.Http;
 
 namespace Economic.Controllers
 {
@@ -19,16 +18,19 @@ namespace Economic.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IProjectService _projectService;
         private readonly ITimeReportService _timeReportService;
+        private readonly IInvoiceGenerationService _invoiceService;
         private readonly IMapper _mapper;
 
         public TimeReportController(UserManager<User> userManager,
             IProjectService projectService,
             ITimeReportService timeReportService,
+            IInvoiceGenerationService invoiceService,
             IMapper mapper)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _projectService = projectService ?? throw new ArgumentNullException(nameof(projectService));
             _timeReportService = timeReportService ?? throw new ArgumentNullException(nameof(timeReportService));
+            _invoiceService = invoiceService ?? throw new ArgumentNullException(nameof(invoiceService));
             _mapper = mapper ?? throw new ArgumentNullException((nameof(mapper)));
         }
 
@@ -141,14 +143,10 @@ namespace Economic.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> MyAction([FromServices] INodeServices nodeServices)
+        public async Task<IActionResult> GenerateInvoice([FromServices] INodeServices nodeServices, long projectId)
         {
-
-            //HttpClient client = new HttpClient();
-            //ar htmlContent = await client.GetStringAsync($"http://{Request.Host}/TimeReport/TimeReports/1");
-            var htmlContent = "Task ID Price 342443 <br /> Task ID Price 34343";
-            //var reportsForInvoice = _timeReportService.GetNotSubmittedReportsAsync();
-
+            var reportsforInvoice = await _timeReportService.GetReportsForInvoiceAsync(projectId);
+            var htmlContent = _invoiceService.GenerateInvoiceAsString(reportsforInvoice);
             var result = await nodeServices.InvokeAsync<byte[]>("./pdf", htmlContent);
 
             HttpContext.Response.ContentType = "application/pdf";

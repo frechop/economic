@@ -1,8 +1,6 @@
 ﻿using Economic.Data.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Economic.Data.Repositories
@@ -21,14 +19,18 @@ namespace Economic.Data.Repositories
             return _ctx.TimeReports.Where(t => t.ProjectId == projectId).ToList();
         }
 
-        public async Task<IEnumerable<TimeReport>> GetNotSubmittedProjecAsync(long projectId)
+        public async Task<IEnumerable<TimeReport>> GetNotSubmittedReportsAsync(long projectId)
         {
             return _ctx.TimeReports.Where(t => t.ProjectId == projectId && t.Submitted == false).ToList();
         }
 
-        public async Task MarkReportsAsSubmitted(long projectId)
+        public async Task MarkReportsAsSubmittedAsync(IEnumerable<TimeReport> timeReports)
         {
-            //_ctx.TimeReports.
+            foreach(TimeReport report in timeReports)
+            {
+                report.Submitted = true;
+            }
+            _ctx.TimeReports.UpdateRange(timeReports);
         }
     }
 }

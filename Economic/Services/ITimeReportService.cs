@@ -1,8 +1,5 @@
 ﻿using Economic.Data.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Economic.Services
@@ -11,7 +8,7 @@ namespace Economic.Services
     {
         Task<IEnumerable<TimeReport>> GetReportsByProjectIdAsync(long projectId);
 
-        Task<IEnumerable<TimeReport>> GetNotSubmittedReportsAsync(long projectId);
+        Task<IEnumerable<TimeReport>> GetReportsForInvoiceAsync(long projectId);
 
         Task AddTimeReportAsync(TimeReport timeReport);
 

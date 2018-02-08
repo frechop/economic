@@ -11,9 +11,9 @@ namespace Economic.Services
     public class ProjectService : IProjectService
     {
         private readonly IProjectRepository _repository;
-        private readonly IdentityDbContext<User> _context;
+        private readonly EconomicContext _context;
 
-        public ProjectService(IProjectRepository repository, IdentityDbContext<User> context)
+        public ProjectService(IProjectRepository repository, EconomicContext context)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _context = context ?? throw new ArgumentNullException(nameof(context));
@@ -28,6 +28,11 @@ namespace Economic.Services
         {
             await _repository.AddAsync(project);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateProjectAsync(Project project)
+        {
+             _repository.Update(project);
         }
 
         public async Task<Project> GetProjectByIdAsync(long projectId)

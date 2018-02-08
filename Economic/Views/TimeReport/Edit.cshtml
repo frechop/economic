@@ -3,20 +3,27 @@
 @{
     ViewData["Title"] = "Edit";
 }
+<br />
 
 <h2>Edit</h2>
+
+<br/>
+<br/>
 
 <form method="post">
     <div class="form-group">
         <label>Hours Spent:</label>
         <input class="form-control" asp-for="HoursSpent"/> 
+        <span asp-validation-for="HoursSpent" class="text-danger"></span>
     </div>
 
     <div>
         <label>Description</label>
         <textarea class="form-control" asp-for="Description"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
+    <br />
     <button type="submit" class="btn btn-primary">Edit TimeReport</button>
 
     <input type="hidden" asp-for="Id"/> 

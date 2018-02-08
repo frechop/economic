@@ -3,8 +3,6 @@ using Economic.Data.Entities;
 using Economic.Data.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Economic.Services
@@ -24,12 +22,15 @@ namespace Economic.Services
 
         public async Task<IEnumerable<TimeReport>> GetReportsByProjectIdAsync(long projectId)
         {
-            return await _timeReportRepository.GetReportsByProjectIdAsync(projectId);
+          return await _timeReportRepository.GetReportsByProjectIdAsync(projectId);
         }
 
-        public async Task<IEnumerable<TimeReport>> GetNotSubmittedReportsAsync(long projectId)
+        public async Task<IEnumerable<TimeReport>> GetReportsForInvoiceAsync(long projectId)
         {
-            return await _timeReportRepository.GetReportsByProjectIdAsync(projectId);
+            var reportsForInvoice = await _timeReportRepository.GetNotSubmittedReportsAsync(projectId);
+            await _timeReportRepository.MarkReportsAsSubmittedAsync(reportsForInvoice);
+            await _ctx.SaveChangesAsync();
+            return reportsForInvoice;
         }
 
         public async Task AddTimeReportAsync(TimeReport timeReport)
@@ -37,6 +38,7 @@ namespace Economic.Services
             using (_ctx)
             {
                 await _timeReportRepository.AddAsync(timeReport);
+                await UpdateProjectTimeAsync(timeReport.HoursSpent, timeReport.ProjectId);
                 await _ctx.SaveChangesAsync();
             }
         }
@@ -46,11 +48,16 @@ namespace Economic.Services
             var oldReport = await _timeReportRepository.GetAsync(timeReport.Id);
             var timeDifference = oldReport.HoursSpent - timeReport.HoursSpent;
             oldReport.HoursSpent = timeReport.HoursSpent;
-            var project = await _projectService.GetProjectByIdAsync(timeReport.ProjectId);
-            project.HoursSpent += timeDifference;
+            await UpdateProjectTimeAsync(timeDifference, oldReport.ProjectId);
             _timeReportRepository.Update(oldReport);
 
             await _ctx.SaveChangesAsync();
+        }
+
+        public async Task UpdateProjectTimeAsync(int hoursSpent, long projectId)
+        {
+            var project = await _projectService.GetProjectByIdAsync(projectId);
+            project.HoursSpent += hoursSpent;
         }
 
         public async Task DeleteTimeReportAsync(long timeReportId)

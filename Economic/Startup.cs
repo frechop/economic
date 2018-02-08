@@ -42,7 +42,7 @@ namespace Economic
             services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<ITaskEntityService, TaskEntityService>();
             services.AddTransient<ITimeReportService, TimeReportService>();
-            services.AddTransient<IdentityDbContext<User>, EconomicContext>();
+            services.AddTransient<IInvoiceGenerationService, InvoiceGenerationService>();
             services.AddNodeServices();
         }
 

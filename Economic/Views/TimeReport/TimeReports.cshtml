@@ -14,17 +14,21 @@
         <div class="form-group">
             <label>Hours Spent:</label>
             <input asp-for="HoursSpent" />
+            <span asp-validation-for="HoursSpent" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label>Price:</label>
             <input asp-for="Price" />
+            <span asp-validation-for="Price" class="text-danger"></span>
         </div>
 
         <hr />
         <div class="form-group">
             <label style="vertical-align:top">Description:</label>
             <textarea class="Description" asp-for="Description" rows="3" cols="54"> </textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+
         </div>
         <button type="submit" class="btn btn-success pull-right">Create TimeReport</button>
     </form>
@@ -57,7 +61,11 @@
     <p id="totalPrice"></p>
 </div>
 
-<button><a href="/TimeReport/MyAction">Export</a></button>
+<br />
+<br />
+<button class="btn btn-success center-block">
+    <a href=@string.Concat("/TimeReport/GenerateInvoice?projectId=",Model.SelectedProject)>Generate Invoice in PDF</a>
+</button>
 @section scripts {
     <script src="~/js/timeReportsTable.js"></script>
 }

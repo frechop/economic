@@ -2,11 +2,10 @@
 
     $("#SelectedProject").change(function () {
         $("reportsTable").DataTable().destroy();
-        InitTable();
-        InitTotal();
+        initTable();
     })
 
-    function InitTable() {
+    function initTable() {
         $("#reportsTable").DataTable({
             "processing": true,
             "serverSide": true,
@@ -42,28 +41,25 @@
                 },
                 {
                     data: null, render: function (data, type, row) {
-                        return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.id + "'); >Delete</a>";
+                        return "<a href='#' class='btn btn-danger' onclick=deleteData('" + row.id + "'); >Delete</a>";
                     }
                 },
             ]
         });
     }
 
-    InitTable();
-
-    $("#content").text($("html").html());
+    initTable();
 });
 
 
-function DeleteData(CustomerID) {
+function deleteData(reportId) {
     if (confirm("Are you sure you want to delete ...?")) {
-        Delete(CustomerID);
+        Delete(reoportId);
     }
     else {
         return false;
     }
 }
-
 
 function Delete(reportId) {
     var url = "/TimeReport/Delete?timeReportId=" + reportId;
