@@ -12,6 +12,6 @@ namespace Economic.Web.Tests.ControllerTests
     public class TimeReportControllerTest
     {
         private readonly IMapper _mapper;
-        private readonly UserManager<User>
+        private readonly UserManager<User> _userManager;
     }
 }

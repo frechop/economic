@@ -14,7 +14,6 @@ namespace Economic.Web.Tests
         public void MapperProfiles_Valid()
         {
             AutoMapper.Mapper.Initialize(m => m.AddProfile<TimeReportProfile>());
-            AutoMapper.Mapper.Initialize(m => m.AddProfile<ProjectProfile>());
             AutoMapper.Mapper.AssertConfigurationIsValid();
         }
     }
