@@ -64,7 +64,7 @@
 <br />
 <br />
 <button class="btn btn-success center-block">
-    <a href=@string.Concat("/TimeReport/GenerateInvoice?projectId=",Model.SelectedProject)>Generate Invoice in PDF</a>
+    <a href=@string.Concat("/TimeReport/GenerateInvoice?projectId=",@Model.SelectedProject)>Generate Invoice in PDF</a>
 </button>
 @section scripts {
     <script src="~/js/timeReportsTable.js"></script>

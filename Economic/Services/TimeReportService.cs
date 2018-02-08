@@ -22,7 +22,7 @@ namespace Economic.Services
 
         public async Task<IEnumerable<TimeReport>> GetReportsByProjectIdAsync(long projectId)
         {
-          return await _timeReportRepository.GetReportsByProjectIdAsync(projectId);
+            return await _timeReportRepository.GetReportsByProjectIdAsync(projectId);
         }
 
         public async Task<IEnumerable<TimeReport>> GetReportsForInvoiceAsync(long projectId)
@@ -45,13 +45,15 @@ namespace Economic.Services
 
         public async Task UpdateTimeReportAsync(TimeReport timeReport)
         {
-            var oldReport = await _timeReportRepository.GetAsync(timeReport.Id);
-            var timeDifference = oldReport.HoursSpent - timeReport.HoursSpent;
-            oldReport.HoursSpent = timeReport.HoursSpent;
-            await UpdateProjectTimeAsync(timeDifference, oldReport.ProjectId);
-            _timeReportRepository.Update(oldReport);
-
-            await _ctx.SaveChangesAsync();
+            using (_ctx)
+            {
+                var oldReport = await _timeReportRepository.GetAsync(timeReport.Id);
+                var timeDifference = oldReport.HoursSpent - timeReport.HoursSpent;
+                oldReport.HoursSpent = timeReport.HoursSpent;
+                await UpdateProjectTimeAsync(timeDifference, oldReport.ProjectId);
+                _timeReportRepository.Update(oldReport);
+                await _ctx.SaveChangesAsync();
+            }
         }
 
         public async Task UpdateProjectTimeAsync(int hoursSpent, long projectId)
@@ -64,6 +66,7 @@ namespace Economic.Services
         {
             var report = await _timeReportRepository.GetAsync(timeReportId);
             _timeReportRepository.Delete(report);
+            await _ctx.SaveChangesAsync();
         }
 
         public async Task<TimeReport> GetReportByIdAsync(long reportId)
